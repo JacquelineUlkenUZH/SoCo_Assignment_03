@@ -86,6 +86,14 @@ class VirtualMachine:
                 print(self.prompt, self.reg[arg0])
             elif op == OPS["prm"]["code"]:
                 print(self.prompt, self.ram[self.reg[arg0]])
+            # [inc]
+            elif op == OPS["inc"]["code"]:
+                self.reg[arg0] += 1
+            # [/inc]
+            # [dec]
+            elif op == OPS["dec"]["code"]:
+                self.reg[arg0] -= 1
+            # [/dec]
             # [/skip]
             else:
                 assert False, f"Unknown op {op:06x}"
