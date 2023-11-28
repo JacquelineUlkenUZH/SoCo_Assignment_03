@@ -1,6 +1,4 @@
 # Count down from 3 then count back up.
-# - R0: loop index.
-# - R1: loop limit.
 ldc R0 3
 loop1:
 prr R0
