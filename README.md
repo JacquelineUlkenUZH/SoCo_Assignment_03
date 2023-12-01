@@ -46,5 +46,12 @@ pytest -s --cov-report term-missing --cov=.. .
 Our test coverage is `87%`.
 
 # Exercise 2
+In folder `exercise 2`, run: `pytest`
+
+### `disassembly.py`
+We created a disassembler using the provided assembler class as a blueprint. ==The disassembler can't restore labels.== (Check if true before handing it in)
+
+### Tests in `test_disassembler.py`
+The tests successfully restore our programs from Exercise 1 (stripped of labels).
 # Exercise 3
 # Exercise 4

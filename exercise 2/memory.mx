@@ -1,0 +1,10 @@
+0d0002 # ldc R0 13
+000102 # ldc R1 0
+010005 # str R0 R1
+00010b # prm R1
+010203 # ldr R2 R1
+000207 # sub R2 R0
+080208 # beq R2 @jump
+000206 # add R2 R0
+00020a # prr R2
+000001 # hlt
