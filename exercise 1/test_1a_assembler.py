@@ -49,3 +49,7 @@ def test_memory():
         for i, line in enumerate(expected):
             expected[i] = line.split("#")[0].strip()
     assert actual == expected
+
+if __name__ == "__main__":
+    import pytest
+    pytest.main([os.path.basename(__file__)])

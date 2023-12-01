@@ -11,7 +11,7 @@ def test_vm_count_up():
     # Setup
     with open("count_up.mx", "r") as file:
         lines = [ln.strip() for ln in file.readlines()]
-    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln]
+    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln] # Strip comments if using manual .mx files
     vm = VirtualMachine()
     vm.initialize(program)
     captured_output = StringIO()
@@ -27,14 +27,14 @@ def test_vm_count_up():
         sys.stdout = sys.__stdout__
     
     # Comparisons
-    with open("count_up_out_expected.log", "r") as file:
+    with open("count_up_expected_out.log", "r") as file:
         expected = file.read()    
     assert actual == expected
 
 def test_vm_memory():
     with open("memory.mx", "r") as file:
         lines = [ln.strip() for ln in file.readlines()]
-    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln]
+    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln] # Strip comments if using manual .mx files
     vm = VirtualMachine()
     vm.initialize(program)
     captured_output = StringIO()
@@ -50,14 +50,14 @@ def test_vm_memory():
         sys.stdout = sys.__stdout__
     
     # Comparisons
-    with open("memory_out_expected.log", "r") as file:
+    with open("memory_expected_out.log", "r") as file:
         expected = file.read()
     assert actual == expected
 
 def test_simple_arithmetic():
-    with open("simple_arithmetic_expected.mx", "r") as file:
+    with open("simple_arithmetic.mx", "r") as file:
         lines = [ln.strip() for ln in file.readlines()]
-    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln]
+    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln] # Strip comments if using manual .mx files
     vm = VirtualMachine()
     vm.initialize(program)
     captured_output = StringIO()
@@ -73,16 +73,11 @@ def test_simple_arithmetic():
         sys.stdout = sys.__stdout__
     
     # Comparisons
-    with open("simple_arithmetic_out_expected.log", "r") as file:
+    with open("simple_arithmetic_expected_out.log", "r") as file:
         expected = file.read()
     assert actual == expected
 
 
-def main():
-    # test_vm_count_up()
-    # test_vm_memory()
-    test_simple_arithmetic()
-
-
 if __name__ == "__main__":
-    main()
+    import pytest
+    pytest.main([os.path.basename(__file__)])
