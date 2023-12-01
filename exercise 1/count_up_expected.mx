@@ -1,0 +1,9 @@
+000002 # ldc R0 0
+030102 # ldc R1 3
+00000a # prr R0
+010202 # ldc R2 1
+020006 # add R0 R2
+010204 # cpy R2 R1
+000207 # sub R2 R0
+020209 # branch back to loop
+000001 # hlt

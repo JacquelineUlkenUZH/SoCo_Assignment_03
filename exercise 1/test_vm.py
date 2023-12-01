@@ -1,77 +1,88 @@
 from io import StringIO
 import os
 import sys
+
+# Appending vm sibling directory to path because we can't change file structure
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+"/../vm/")
 from vm import VirtualMachine
 
-
 def test_vm_count_up():
+    
+    # Setup
     with open("count_up.mx", "r") as file:
-        vm_1 = VirtualMachine()
         lines = [ln.strip() for ln in file.readlines()]
-        program = [int(ln, 16) for ln in lines if ln]
-        vm_1.initialize(program)
-        captured_output = StringIO()
-        sys.stdout = captured_output
-        vm_1.run()
+    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln]
+    vm = VirtualMachine()
+    vm.initialize(program)
+    captured_output = StringIO()
+    sys.stdout = captured_output
+    
+    # Running
+    try:
+        vm.run()
+    
+    # Teardown no matter what happens
+    finally:
+        actual = captured_output.getvalue()
         sys.stdout = sys.__stdout__
-        with open("run_count_up", "r") as run_count_up:
-            print(run_count_up.read())
-            print(captured_output.getvalue())
-            assert captured_output.getvalue() == run_count_up.read()
-        writer = open("vm_output_count_up", "w")
-        vm_1.show(writer)
-        with open("show_count_up", "r") as show_count_up:
-            with open("vm_output", "r") as vm_output_count_up:
-                print(show_count_up.read())
-                print(vm_output_count_up.read())
-                print("------------------")
-                assert show_count_up.read() == vm_output_count_up.read()
-
+    
+    # Comparisons
+    with open("count_up_out_expected.log", "r") as file:
+        expected = file.read()    
+    assert actual == expected
 
 def test_vm_memory():
     with open("memory.mx", "r") as file:
-        vm_2 = VirtualMachine()
         lines = [ln.strip() for ln in file.readlines()]
-        program = [int(ln, 16) for ln in lines if ln]
-        vm_2.initialize(program)
-        captured_output = StringIO()
-        sys.stdout = captured_output
-        vm_2.run()
+    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln]
+    vm = VirtualMachine()
+    vm.initialize(program)
+    captured_output = StringIO()
+    sys.stdout = captured_output
+    
+    # Running
+    try:
+        vm.run()
+    
+    # Teardown no matter what happens
+    finally:
+        actual = captured_output.getvalue()
         sys.stdout = sys.__stdout__
-        with open("run_memory", "r") as run_memory:
-            print(run_memory.read())
-            print(captured_output.getvalue())
-            assert captured_output.getvalue() == run_memory.read() # check if read is correct (maybe read the file as one string)
-        writer = open("vm_output_memory", "w")
-        vm_2.show(writer)
-        with open("show_memory", "r") as show_memory:
-            with open("vm_output_memory", "r") as vm_output_memory:
-                print(show_memory.read())
-                print(vm_output_memory.read())
-                assert show_memory.read() == vm_output_memory.read()
+    
+    # Comparisons
+    with open("memory_out_expected.log", "r") as file:
+        expected = file.read()
+    assert actual == expected
+
+def test_simple_arithmetic():
+    with open("simple_arithmetic_expected.mx", "r") as file:
+        lines = [ln.strip() for ln in file.readlines()]
+    program = [int(ln.split("#")[0].strip(), 16) for ln in lines if ln]
+    vm = VirtualMachine()
+    vm.initialize(program)
+    captured_output = StringIO()
+    sys.stdout = captured_output
+    
+    # Running
+    try:
+        vm.run()
+    
+    # Teardown no matter what happens
+    finally:
+        actual = captured_output.getvalue()
+        sys.stdout = sys.__stdout__
+    
+    # Comparisons
+    with open("simple_arithmetic_out_expected.log", "r") as file:
+        expected = file.read()
+    assert actual == expected
 
 
 def main():
-    test_vm_count_up()
-    test_vm_memory()
+    # test_vm_count_up()
+    # test_vm_memory()
+    test_simple_arithmetic()
 
 
 if __name__ == "__main__":
     main()
-
-
-# def test_count_up():
-#     with open("count_up.as", "r") as file:
-#         ass = Assembler()
-#         count_up_hex = ass.assemble(file.readlines())
-#         with open("count_up.mx", "r") as mx:
-#             assert mx.read().splitlines() == count_up_hex
-#
-#
-# def test_memory():
-#     with open("memory.as", "r") as file:
-#         ass = Assembler()
-#         memory_hex = ass.assemble(file.readlines())
-#         with open("memory.mx", "r") as mx:
-#             assert mx.read().splitlines() == memory_hex
