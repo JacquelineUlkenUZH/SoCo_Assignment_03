@@ -54,4 +54,13 @@ We created a disassembler using the provided assembler class as a blueprint. ==T
 ### Tests in `test_disassembler.py`
 The tests successfully restore our programs from Exercise 1 (stripped of labels).
 # Exercise 3
+You can run the commands as per requirement or, for your convenience, in folder `exercise 3`, just run: `pytest`
+
+### 3.1 solved in `example_3_1.as`
+We created two loops that print values on each iteration. The first showcases `dec` to count back from 3 to 0, the second then uses `inc` to count up from 0 to 3 (whilst using `dec` to control the loop in `R1`).
+### 3.2 solved in `example_3_2.as`
+We load `R0` and `R1` with two 3 and 7, respectively. We then print both registers, swap them, and print them again.
+### 3.3 solved in `example_3_2.as`
+We decided to be fancy and generate an array with the first ten Fibonacci numbers. We then reverse the array.
+
 # Exercise 4
