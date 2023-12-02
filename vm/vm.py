@@ -55,12 +55,6 @@ class VirtualMachine:
         running = True
         while running:
             op, arg0, arg1 = self.fetch()
-            # [check negatives ]
-            assert arg0 >= 0, f"Negative number! arg0 = {str(arg0)}"
-            assert arg1 >= 0, f"Negative number! arg1 = {str(arg1)}"
-            for i, reg in enumerate(self.reg):
-                assert reg >= 0, f"Negative number in R{i}"
-            # [/check negatives ]
             if op == OPS["hlt"]["code"]:
                 running = False
             elif op == OPS["ldc"]["code"]:
