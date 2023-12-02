@@ -25,9 +25,12 @@ class VirtualMachine4solved(VirtualMachineBreak):
     # [/interact]
     
     def show_memory(self, start, end=None):
-        # TODO: Input validation (start < end, start/end in range, etc.)
-        if end is None: end = start + 1
-        for addr in range(start, end):
+        if end is None: end = start # note end+1 in range()
+        if start > end: start, end = end, start
+        if not (0 <= start < len(self.ram) and end < len(self.ram)):
+            self.write(f"Invalid memory address")
+            return True
+        for addr in range(start, end+1):
             self.write(f"{addr:06x}: {self.ram[addr]:06x}")
 
     # [memory]
