@@ -1,4 +1,5 @@
 import sys
+import inspect
 
 from architecture import OPS, VMState
 from vm_break import VirtualMachineBreak
@@ -17,6 +18,10 @@ class VirtualMachine4solved(VirtualMachineBreak):
                     continue
                 elif command not in self.handlers:
                     self.write(f"Unknown command {command}")
+                # Functions with 2 arguments (self, addr) from "old" parent classes
+                elif len(inspect.signature(self.handlers[command]).parameters) == 1:
+                    interacting = self.handlers[command](self.ip)
+                # New functions with 3+ arguments (self, addr, *cargs)
                 else:
                     interacting = self.handlers[command](self.ip, *cargs)
             except EOFError:
