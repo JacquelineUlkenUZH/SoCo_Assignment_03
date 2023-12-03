@@ -7,7 +7,7 @@ To import the vm classes, we resorted to appending the path with `sys.path.appen
 
 We wrote three assembly programs that cover all 11 instructions of the vm at least once.
 - `count_up.as` counts to 3 using a loop.
-- `memory.as` @Anna can you explain it in one sentence? ==TODO==
+- `memory.as` main purpose is to include and test the rest of the operations
 - `simple_arithmetic.as` Tests simple add, subtract and copy operations
 
 ### A solved in `test_1a_assembler.py`
