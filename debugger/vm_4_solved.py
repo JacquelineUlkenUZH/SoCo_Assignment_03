@@ -10,6 +10,11 @@ class VirtualMachine4solved(VirtualMachineBreak):
     def __init__(self):
         super().__init__()
         
+        self.handlers |= {
+            "watch": self._do_add_watchpoint,
+            "unwatch": self._do_clear_watchpoint,
+        }
+        
         # Adding abbreviations for commands while avoiding duplicates
         duplicates = []
         for cmd in list(self.handlers.keys()):
@@ -20,6 +25,9 @@ class VirtualMachine4solved(VirtualMachineBreak):
                     self.handlers[cmd[:end]] = self.handlers[cmd]
         for cmd in duplicates:
             del self.handlers[cmd]
+        
+        # Adding watchpoints
+        self.watchpoints = []
                 
 
     # [interact]
@@ -50,15 +58,8 @@ class VirtualMachine4solved(VirtualMachineBreak):
     # [/interact]
     
     def _cargs_to_addresses(self, cargs):
-        """Checks if arguments are valid memory addresses and returns them as sorted list of integers.
-
-        Args:
-            cargs (str[]): List of strings representing memory addresses
-
-        Returns:
-            bool: True if all arguments are valid memory addresses
-            int[]: Sorted list of integers representing memory addresses
-        """         
+        """Checks if arguments are valid memory addresses and returns them as sorted list of integers."""
+        
         for i, arg in enumerate(cargs):
             if not arg.isdigit():
                 return False, []
@@ -81,19 +82,50 @@ class VirtualMachine4solved(VirtualMachineBreak):
         
         return True
     # [/memory]
-    
 
-    # [add]
+    def execute(self, op, arg0, arg1):
+        """Execute a single instruction after checking for watchpoints."""
+        if op == OPS["str"]["code"]:
+            self.assert_is_register(arg1)
+            self.assert_is_address(self.reg[arg1])
+            if self.reg[arg1] in self.watchpoints:
+                self.write(f"Watchpoint {self.reg[arg1]:06x} ({self.reg[arg1]}): Overriding {self.ram[self.reg[arg1]]} with {self.reg[arg0]}")
+                self.interact(self.ip-1)
+        super().execute(op, arg0, arg1)
+
+    # [add breakpoint]
     def _do_add_breakpoint(self, addr, *cargs):
         if cargs: addr = cargs[0]
         return super()._do_add_breakpoint(addr)
     # [/add]
 
-    # [clear]
+    # [clear breakpoint]
     def _do_clear_breakpoint(self, addr, *cargs):
         if cargs: addr = cargs[0]
         return super()._do_clear_breakpoint(addr)
     # [/clear]
+    
+    def _do_add_watchpoint(self, addr, *cargs):
+        if not cargs:
+            self.write(f"Missing memory address")
+            return
+        elif cargs[0] in self.watchpoints:
+            self.write(f"Watchpoint already set")
+            return
+        else:
+            self.watchpoints.append(cargs[0])
+            return True
+    
+    def _do_clear_watchpoint(self, addr, *cargs):
+        if not cargs:
+            self.write(f"Missing memory address")
+            return
+        elif cargs[0] not in self.watchpoints:
+            self.write(f"Watchpoint not set")
+            return
+        else:
+            self.watchpoints.remove(cargs[0])
+            return True
 
 if __name__ == "__main__":
     VirtualMachine4solved.main()

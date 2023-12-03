@@ -64,3 +64,61 @@ We load `R0` and `R1` with two 3 and 7, respectively. We then print both registe
 We decided to be fancy and generate an array with the first ten Fibonacci numbers. We then reverse the array.
 
 # Exercise 4
+### 4.1 Show Memory Range
+In folder `exercise 4`, run: `python ./vm_4_solved.py ./count_up.mx` which counts 0, 1, 2 using a loop.
+
+Showcase:
+1. Print entire memory: `m`
+2. Verify memory position `4` is `020006`
+3. Print memory position 4 alone: `m 4`
+4. Verify you see `000004: 020006`
+5. Print memory positions 4 to 11: `m 4 11`
+6. Verify with previous printout.
+7. Verify input validation: `m a`, `m 280`, `m 11 4`
+8. Print entire memory range: `m 0 255`
+
+### 4.2 Breakpoint Addresses
+In folder `exercise 4`, run: `python ./vm_4_solved.py ./count_up.mx` which counts 0, 1, 2 using a loop.
+
+Showcase:
+1. Add breakpoint to position 5: `b 5`
+2. Run: `r`
+3. Note the program printed `0` and breakpoint hit on position 5.
+4. Run: `r`
+3. Note the program printed `1` and breakpoint hit on position 5.
+6. Step to be on different address: `s`
+7. Clear breakpoint on position 5: `c 5`
+8. Run: `r`
+9. Note the program printed `2` without hitting any breakpoint.
+
+### 4.3 Command Completion
+In folder `exercise 4`, run: `python ./vm_4_solved.py ./count_up.mx` which counts 0, 1, 2 using a loop.
+
+Showcase:
+1. Verify these commands produce the same output:
+	1. `m 4 7`
+	2. `me 4 7`
+	3. `memor 4 7`
+2. Verify `step`:
+	1. `s`
+	2. `st`
+	3. `ste`
+	4. `step`
+
+### 4.4 Watchpoints
+Note: We decided to break on watchpoints every time a value is written, no matter if the old value is the same. Also beware we use the custom program `count_up_store.mx` to showcase.
+
+In folder `exercise 4`, run: `python ./vm_4_solved.py ./count_up_store.mx` which counts 0, 1, 2 using a loop and stores the counter in memory position 240.
+
+We called the debugger commands `watch` and `unwatch`.
+
+Showcase:
+1. Add watchpoint to memory address 240: `w 240`
+2. Run: `r`
+3. Verify output: `Watchpoint 0000f0 (240): Overriding 0 with 0`
+4. Run: `r`
+5. Verify output: `Watchpoint 0000f0 (240): Overriding 0 with 1`
+6. Run: `r`
+7. Verify output: `Watchpoint 0000f0 (240): Overriding 1 with 2`
+8. Run: `r`
+9. The program finishes, prints the memory, verify memory address `0000f0 (240)` is 2.
