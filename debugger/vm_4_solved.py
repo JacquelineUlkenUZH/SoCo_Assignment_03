@@ -6,6 +6,21 @@ from vm_break import VirtualMachineBreak
 
 # Class hierarchy: base > step > extended > break > 4solved
 class VirtualMachine4solved(VirtualMachineBreak):
+    
+    def __init__(self):
+        super().__init__()
+        
+        # Adding abbreviations for commands while avoiding duplicates
+        duplicates = []
+        for cmd in list(self.handlers.keys()):
+            for end in range(1, len(cmd)):
+                if cmd[:end] in self.handlers:
+                    duplicates.append(cmd[:end])
+                else:
+                    self.handlers[cmd[:end]] = self.handlers[cmd]
+        for cmd in duplicates:
+            del self.handlers[cmd]
+                
 
     # [interact]
     def interact(self, addr):
