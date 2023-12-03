@@ -36,8 +36,8 @@ class VirtualMachine4solved(VirtualMachineBreak):
     # [memory]
     def _do_memory(self, addr, *cargs):
         if len(cargs) == 0: self.show()
-        if len(cargs) == 1: self.show_memory(int(cargs[0], 16))
-        if len(cargs) == 2: self.show_memory(int(cargs[0], 16), int(cargs[1], 16))
+        if len(cargs) == 1: self.show_memory(int(cargs[0]))
+        if len(cargs) == 2: self.show_memory(int(cargs[0]), int(cargs[1]))
         
         return True
     # [/memory]
