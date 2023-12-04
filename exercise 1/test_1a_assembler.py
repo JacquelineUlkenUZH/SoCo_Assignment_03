@@ -2,7 +2,7 @@ import os
 import sys
 
 # Appending vm sibling directory to path because we can't change file structure
-sys.path.append(os.path.dirname(os.path.abspath(__file__))+"/../vm/")
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../vm/")
 from assembler import Assembler
 
 
@@ -50,6 +50,8 @@ def test_memory():
             expected[i] = line.split("#")[0].strip()
     assert actual == expected
 
+
 if __name__ == "__main__":
     import pytest
+
     pytest.main([os.path.basename(__file__)])
