@@ -26,37 +26,37 @@ dec R1
 bne R1 @print_array
 # Now we reverse the array
 # - R0: array start
-# - R1: array end
-# - R2: used both as temporary and to check the difference between R0 and R1
-# - R3: temporary
+# - R1: difference between end and start of array
+# - R2: takes value from R0 and stores it at R0 + R1
+# - R3: takes value from R0 + R1 and stores it at R0
 ldc R0 @array
-ldc R1 10
-add R1 R0
-dec R1
-ldc R2 0
-ldc R3 0
+ldc R1 9
 reverse:
-dec R2
-beq R2 @stop
+# If R1 = - 1, then stop
+inc R1
+beq R1 @stop
+dec R1
+add R1 R0  # R1 is now end of array
+# Swap the first and last elements
 ldr R2 R0
 ldr R3 R1
 str R2 R1
 str R3 R0
+# Increment the array start and decrement the array end
 inc R0
 dec R1
-cpy R2 R0
-sub R2 R1
-bne R2 @reverse
+sub R1 R0  # R1 is now difference between end and start of array
+bne R1 @reverse  # If R1 is not 0, continue
 stop:
 # Finally print the reversed array
 ldc R0 @array
 ldc R1 10
-printre:
+print_reversed:
 ldr R2 R0
 prr R2
 inc R0
 dec R1
-bne R1 @printre
+bne R1 @print_reversed
 hlt
 .data
 array: 10
