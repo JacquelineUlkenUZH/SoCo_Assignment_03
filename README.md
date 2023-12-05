@@ -49,7 +49,7 @@ Our test coverage is `87%`.
 In folder `exercise 2`, run: `pytest`
 
 ### `disassembly.py`
-We created a disassembler using the provided assembler class as a blueprint. ==The disassembler can't restore labels.== (Check if true before handing it in)
+We created a disassembler using the provided assembler class as a blueprint. The disassembler can't restore labels.
 
 ### Tests in `test_disassembler.py`
 The tests successfully restore our programs from Exercise 1 (stripped of labels).
