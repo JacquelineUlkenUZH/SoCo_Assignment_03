@@ -3,7 +3,7 @@
 # Exercise 1
 In folder `exercise 1`, run: `pytest`
 ### General
-To import the vm classes, we resorted to appending the path with `sys.path.append()`. (So as not to alter the directory structure by adding `__init__.py`.)
+To import the vm classes, we resorted to appending the directory `/vm` from the other subdirectories using `sys.path.append()`. This way we deviate from the required directory structure as little as possible.
 
 We wrote three assembly programs that cover all 11 instructions of the vm at least once.
 - `count_up.as` counts to 3 using a loop.
@@ -46,13 +46,16 @@ pytest -s --cov-report term-missing --cov=.. .
 Our test coverage is `87%`.
 
 # Exercise 2
-In folder `exercise 2`, run: `pytest`
+In folder `exercise 2`, run: `python disassemble.py input_file.mx output_file.as`
 
-### `disassembly.py`
+### `disassemble.py`
 We created a disassembler using the provided assembler class as a blueprint. The disassembler can't restore labels.
 
+We renamed our program `memory.mx` to `input_file.mx` so as to stick to the requirements. `count_up.mx` and `simple_arithmetic.mx` are in the folder, too.
+
 ### Tests in `test_disassembler.py`
-The tests successfully restore our programs from Exercise 1 (stripped of labels).
+In folder `exercise 2`, run: `pytest`
+The tests successfully restore all three programs. To test this, we added our `_expected.as` solutions as assembler files stripped of labels.
 # Exercise 3
 You can run the commands as per requirement or, for your convenience, in folder `exercise 3`, just run: `pytest`
 
