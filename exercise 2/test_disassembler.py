@@ -19,10 +19,10 @@ def test_simplearithmetic():
 def test_memory():
     ass = Disassembler()
     #disassembling
-    with open("memory.mx", "r") as file:
+    with open("input_file.mx", "r") as file:
         actual = ass.disassemble(file.readlines())
     # Testing against manual solution stripped of comments and empty lines
-    with open("memory_expected.as", "r") as mx:
+    with open("output_file_expected.as", "r") as mx:
         expected = [l for l in mx.read().splitlines() if l and not l.startswith("#")]
         
     assert actual == expected
